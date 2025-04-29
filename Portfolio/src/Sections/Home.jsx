@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FaLinkedin, FaTwitter } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Profile from "../assets/Profile.jpg";
@@ -10,13 +10,23 @@ const roles = [
 ];
 
 const Home = () => {
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  // Rotating roles effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRoleIndex((prevIndex) => (prevIndex + 1) % roles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div id="home">
-      <section className="min-h-screen flex flex-col md:flex-row items-center justify-center text-center md:text-left px-6 bg-gradient-to-r from-[#0f172a] to-[#1e293b] text-white">
-        
-        <div className="w-full md:w-1/2">
+      <section className="min-h-screen flex flex-col md:flex-row items-center justify-center text-center md:text-left px-4 sm:px-6 lg:px-12 bg-gradient-to-r from-[#0f172a] to-[#1e293b] text-white">
+        {/* Text Section */}
+        <div className="w-full md:w-1/2 flex flex-col items-center md:items-start mt-8 md:mt-0">
           <motion.h1
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -24,22 +34,17 @@ const Home = () => {
             Hi, I'm <span className="text-blue-400">Gaurav Verma</span>
           </motion.h1>
 
-        
           <motion.p
-            className="text-blue-300 text-lg sm:text-xl font-semibold mb-4 block"
+            className="text-blue-300 text-base sm:text-lg font-semibold mb-4 h-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{
-              duration: 1,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
+            transition={{ duration: 0.5 }}
           >
-            {roles[Math.floor(Math.random() * roles.length)]}
+            {roles[roleIndex]}
           </motion.p>
 
           <motion.p
-            className="text-lg text-gray-300 mb-6 leading-relaxed"
+            className="text-sm sm:text-base text-gray-300 mb-4 leading-relaxed max-w-xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
@@ -53,7 +58,7 @@ const Home = () => {
           </motion.p>
 
           <motion.p
-            className="text-lg text-gray-300 mb-6 leading-relaxed"
+            className="text-sm sm:text-base text-gray-300 mb-4 leading-relaxed max-w-xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 1 }}
@@ -67,7 +72,7 @@ const Home = () => {
           </motion.p>
 
           <motion.p
-            className="text-lg text-gray-300 mb-6 leading-relaxed"
+            className="text-sm sm:text-base text-gray-300 mb-6 leading-relaxed max-w-xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 1 }}
@@ -77,7 +82,6 @@ const Home = () => {
             🚀
           </motion.p>
 
-          
           <motion.div
             className="flex space-x-4 justify-center md:justify-start"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -86,13 +90,12 @@ const Home = () => {
           >
             <a
               href="#projects"
-              className="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg transition duration-300"
+              className="px-6 py-3 text-sm sm:text-base bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg transition duration-300"
             >
               View Portfolio
             </a>
           </motion.div>
 
-        
           <motion.div
             className="flex space-x-6 mt-6 justify-center md:justify-start"
             initial={{ opacity: 0 }}
@@ -118,7 +121,7 @@ const Home = () => {
           </motion.div>
         </div>
 
-  
+        {/* Profile Image */}
         <motion.div
           className="w-full md:w-1/2 flex justify-center mt-10 md:mt-0"
           initial={{ opacity: 0, x: 20 }}
@@ -128,9 +131,7 @@ const Home = () => {
           <img
             src={Profile}
             alt="Gaurav"
-            className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 
-                     rounded-full shadow-lg border-4 border-blue-500 
-                     object-contain"
+            className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 rounded-full shadow-lg border-4 border-blue-500 object-cover"
           />
         </motion.div>
       </section>
